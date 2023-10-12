@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.security.MessageDigest;
 
 public class User {
+
     private String firstName;
     private String lastName;
     private String userID;
@@ -20,5 +21,30 @@ public class User {
 
         // Generate a uuid
         this.userID = bank.getNewUserID();
-     }
+
+        this.accounts = new ArrayList<Account>();
+
+        System.out.printf("new user %s, %s", this.userID, this.firstName + " " + this.lastName);
+    }
+
+    public boolean validatePin(String pin) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        return MessageDigest.isEqual(md.digest(pin.getBytes()), pinHash);
+    }
+
+    public void addNewAccount(Account acc){
+        this.accounts.add(acc);
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 }
